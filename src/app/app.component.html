@@ -1,0 +1,64 @@
+<div class="grid">
+  <p-tabView class="col-12">
+
+    <p-tabPanel header="Syllables">
+      <p-card>
+        <div class="grid">
+
+          <textarea class="col-12" id="float-input" pInputTextarea [(ngModel)]="syllables"></textarea>
+
+        </div>
+      </p-card>
+    </p-tabPanel>
+    <p-tabPanel header="Generate">
+      <p-card>
+        <div class="grid">
+          <div class="col-2"><span class="p-float-label">
+              <input id="float-input" type="number" pInputText [(ngModel)]="wordLength">
+              <label for="float-input">Word Length (in syllables)</label>
+            </span></div>
+          <div class="col-2"><span class="p-float-label">
+              <input id="float-input" type="number" pInputText [(ngModel)]="columns">
+              <label for="float-input">Columns</label>
+            </span></div>
+          <div class="col-2"><span class="p-float-label">
+              <input id="float-input" type="number" pInputText [(ngModel)]="rows">
+              <label for="float-input">Rows</label>
+            </span></div>
+        </div>
+        <br>
+        <div class="grid">
+          <button pButton type="button" label="Generate" (click)="generateData()"></button>
+        </div>
+      </p-card>
+    </p-tabPanel>
+
+    <p-tabPanel header="Style">
+      <p-card>
+        <div class="grid">
+          <div class="col-2"><span class="p-float-label" style="width: 100%">
+              <p-dropdown [style]="{'minWidth':'100%'}" [options]="fontSizes" [(ngModel)]="fontSizeSelected"
+                optionLabel="label"></p-dropdown>
+              <label for="float-input">Font Size</label>
+            </span></div>
+          <div class="col-2"><span class="p-float-label" style="width: 100%">
+              <p-dropdown [style]="{'minWidth':'100%'}" [options]="textCases" [(ngModel)]="textCaseSelected"
+                optionLabel="label" (onChange)="this.transformData()"></p-dropdown>
+              <label for="float-input">Text Case</label>
+            </span></div>
+        </div>
+      </p-card>
+    </p-tabPanel>
+
+  </p-tabView>
+</div>
+
+<p-table [columns]="cols" [value]="words">
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns" [ngStyle]="fontSizeSelected.value">
+        {{rowData[col]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
